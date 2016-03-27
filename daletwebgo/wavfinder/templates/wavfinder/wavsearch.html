@@ -1,21 +1,7 @@
-{% load staticfiles %}
-<html>
-	<head>
-		<title> DaletWebGo </title>
-		<link rel="stylesheet" href="{% static 'css/w3.css' %}">
-		<link rel="stylesheet" href="{% static 'css/w3-theme-teal.css' %}">
-	</head>
-	<header class="w3-container w3-theme">
-	<h2>DaletWebGo</h2>
-	<ul class="w3-navbar w3-theme">
-	<li><a href="#">Hjem</a></li>
-	<li><a href="#">Jobbstatus</a></li>
-	</ul>
-	</header>
-
-	<div class="w3-padding w3-white">
+{% extends 'wavfinder/base.html' %}
+{% block content %}
 	<h2>Finn wav filer</h2>
-	<p>Her kan du søke opp wav filer fra filområdet til Dalet. Skriv inn filnavn og trykk søkeknappen.</p>
+	<p>Her kan du søke opp .wav filer fra filområdet til Dalet. Skriv inn filnavn og trykk søkeknappen.</p>
 
 	<form action="." method="post">
 		{% csrf_token %}
@@ -23,10 +9,10 @@
 		<input type="submit" value="Søk" />
 	</form>
 
-	<P>Du har ikke gjort noe søk enda, men her er de de nyeste filene som er laget i Dalet, kanskje du er på utkikk etter en av disse?</p>
-	</div>
-	<footer class="w3-container w3-theme">
-	<!--<h5>DaletWebGo</h5>-->
-	<p class="w3-opacity">Finn wav filer og last dem opp til ftp, det er jo lett som bare det!</p>
-	</footer>
-</html>
+	{% if filelist %} 
+	<P>Du har ikke gjort noe søk enda, men her er de de nyeste filene som er endret i Dalet, kanskje du er på utkikk etter en av disse? Bare trykk på filen så blir det MP3 og FTP!</p>
+	{% endif %}
+	{% for file in filelist %}
+	<a class="w3-btn w3-hover-purple" href="#">{{file}}</a><br />
+	{% endfor %}
+{% endblock %}

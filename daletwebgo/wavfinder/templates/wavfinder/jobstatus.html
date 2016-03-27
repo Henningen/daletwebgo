@@ -1,0 +1,24 @@
+{% extends 'wavfinder/base.html' %}
+{% block content %}
+	<!--
+	<ul class="w3-navbar w3-blue">
+		<li><a href="#">Pågående&kø</a></li>
+		<li><a href="#">Feil</a></li>
+		<li><a href="#">Ferdig</a></li>
+		<li><a href="#">Alle</a></li>
+	</ul>
+	-->
+	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}">Kø</a>
+	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}failed">Feil</a>
+	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}finished">Ferdig</a>
+	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}all">Alle</a>
+	{% if status == "progress" or status == "all" %} 
+		<p>Pågående&kø kommer her</p>
+	{% endif %}
+	{% if status == "failed" or status == "all" %} 
+		<p>Feil</p>
+	{% endif %}
+	{% if status == "finished" or status == "all" %} 
+		<p>Ferdig</p>
+	{% endif %}
+{% endblock %}
