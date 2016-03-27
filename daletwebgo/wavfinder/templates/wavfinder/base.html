@@ -1,21 +1,34 @@
 {% load staticfiles %}
 <html>
+	<div class="w3-container w3-theme">
+	<div class=w3-row>
+	<div class="w3-col" style="width:5%;min-height:1px"></div>
 	<head>
 		<title> DaletWebGo </title>
 		<link rel="stylesheet" href="{% static 'css/w3.css' %}">
 		<link rel="stylesheet" href="{% static 'css/w3-theme-teal.css' %}">
 	</head>
-	<header class="w3-container w3-theme">
+	<header class="w3-theme">
 	<h2>DaletWebGo</h2>
 	{% include "wavfinder/navbar.html" %}
 	</header>
-
-	<div class="w3-padding w3-white">
-	{% block content %}
-	{% endblock %}
+	{% comment %}
+	<div class="w3-rest w3-padding w3-white">
+	<div class="w3-col w3-theme" style="width:15px;height:100%;min-height:100%"></div>
+	<div class="w3-col" style="width:50px" />
+	{% endcomment %}
+	<div class="w3-row">
+		<div class="w3-col" style="width:5%;min-height:1px"></div>
+		<div class="w3-col w3-padding w3-white" style="width:90%">
+			{% block content %}
+			{% endblock %}
+		</div>
+		<div class="w3-col" style="width:5%;min-height:1px"></div>
+	</div>
 	</div>
 	<footer class="w3-container w3-theme">
 	<!--<h5>DaletWebGo</h5>-->
 	<p class="w3-opacity">Finn wav filer, lag mp3, og last dem opp til ftp, det er jo lett som bare det!</p>
 	</footer>
+	</div>
 </html>
