@@ -3,16 +3,19 @@
 	<h2>Finn wav filer</h2>
 	<p>Her kan du søke opp .wav filer fra filområdet til Dalet. Skriv inn filnavn og trykk søkeknappen.</p>
 
-	<form action="." method="post">
+	<form action="." method="get">
 		{% csrf_token %}
 		<input type="text" name="search" id="id_search" />
 		<input type="submit" value="Søk" />
 	</form>
-
-	{% if filelist %} 
+	{% if search.results > 0 %}
+	<p> Du søkte etter {{search.query}} og fikk {{search.results}} treff.</p>
+	{% elif search.query and search.results == 0 %}
+	<p> Søket etter {{search.query}} gav ingen treff, prøv å søke etter noe annet!</p>
+	{% else %} 
 	<P>Du har ikke gjort noe søk enda, men her er de de nyeste filene som er endret i Dalet, kanskje du er på utkikk etter en av disse? Bare trykk på filen så blir det MP3 og FTP!</p>
 	{% endif %}
 	{% for file in filelist %}
-	<a class="w3-btn w3-hover-purple" href="#">{{file}}</a><br />
+	<a class="w3-btn w3-hover-purple" href="#">{{file}}</a>
 	{% endfor %}
 {% endblock %}

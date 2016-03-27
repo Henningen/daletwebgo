@@ -8,10 +8,12 @@
 		<li><a href="#">Alle</a></li>
 	</ul>
 	-->
+	<div class="w3-container">
 	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}">Kø</a>
 	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}failed">Feil</a>
 	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}finished">Ferdig</a>
 	<a class="w3-btn w3-hover-purple" href="{% url 'jobstatus' %}all">Alle</a>
+	</div>
 	{% if status == "progress" or status == "all" %} 
 		<p>Pågående&kø kommer her</p>
 	{% endif %}
