@@ -3,7 +3,7 @@
 	<h2>Finn wav filer</h2>
 	<p>Her kan du søke opp .wav filer fra filområdet til Dalet. Skriv inn filnavn og trykk søkeknappen.</p>
 
-	<form action="." method="get">
+	<form action="{% url 'wavsearch' %}search/" method="post">
 		{% csrf_token %}
 		<input type="text" name="search" id="id_search" />
 		<input type="submit" value="Søk" />
