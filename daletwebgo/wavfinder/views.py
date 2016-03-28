@@ -33,23 +33,18 @@ def wavsearch(request, search="" ):
         else:
             filelist.append(os.path.basename(path))
         count+=1
-        if count == 10:
+        if not searchobject.query and count == 10:
             break
     return render(request, 'wavfinder/wavsearch.html', {'filelist': filelist, 'search': searchobject})
 
 def wavsearchredir(request, search=""):
     if request.POST.get('search', ""):
        search = request.POST.get('search', "")
+    #in case someone searches with no value just send them back to front page
+    if search == "":
+        return HttpResponseRedirect( "/wavfinder/")
     return HttpResponseRedirect( "/wavfinder/search/"+search+"/")
 
 
 def jobstatus(request, status="progress"):
     return render(request, 'wavfinder/jobstatus.html', {'status': status})
-
-
-
-
-#NOTE: on Windows `ST_CTIME` is a creation date 
-#  but on Unix it could be something else
-#NOTE: use `ST_MTIME` to sort by a modification date
-

@@ -5,11 +5,11 @@
 
 	<form action="{% url 'wavsearch' %}search/" method="post">
 		{% csrf_token %}
-		<input type="text" name="search" id="id_search" />
-		<input type="submit" value="Søk" />
+		<input class="w3-input-custom" type="text" name="search" id="id_search"/>
+		<input class="w3-btn w3-hover-purple" type="submit" value="Søk" />
 	</form>
 	{% if search.results > 0 %}
-	<p> Du søkte etter {{search.query}} og fikk {{search.results}} treff.</p>
+	<p> Du søkte etter {{search.query}} og fikk {{search.results}} treff. Trykk på filen du leter etter!</p>
 	{% elif search.query and search.results == 0 %}
 	<p> Søket etter {{search.query}} gav ingen treff, prøv å søke etter noe annet!</p>
 	{% else %} 
