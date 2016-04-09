@@ -5,13 +5,17 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from stat import S_ISREG, ST_MTIME, ST_MODE
 import os, sys, time, re
+from django_rq import job
+import django_rq
+from rq import get_current_job
+from .models import LongTask
 
 
 class Search(object):
     query=""
     results=0
 
-def wavsearch(request, search="" ):
+def wavsearch(request, search="", addqueue="", enqueue="" ):
 #    return HttpResponse("Hello, world. You're at the wavfinder index.")
     dirpath="/home/henning/env/inputfiles"  # insert the path to your directory, FIXME: Please make static variable of some sort for this
     entries = (os.path.join(dirpath, fn) for fn in os.listdir(dirpath))
@@ -35,7 +39,13 @@ def wavsearch(request, search="" ):
         count+=1
         if not searchobject.query and count == 10:
             break
-    return render(request, 'wavfinder/wavsearch.html', {'filelist': filelist, 'search': searchobject})
+    if (addqueue != ""):
+        task = LongTask.objects.create(
+            name=addqueue,
+            result='QUEUED'
+        )   
+        django_rq.enqueue(longrun, task)
+    return render(request, 'wavfinder/wavsearch.html', {'filelist': filelist, 'search': searchobject, 'addqueue': addqueue, 'enqueue': enqueue })
 
 def wavsearchredir(request, search=""):
     if request.POST.get('search', ""):
@@ -48,3 +58,20 @@ def wavsearchredir(request, search=""):
 
 def jobstatus(request, status="progress"):
     return render(request, 'wavfinder/jobstatus.html', {'status': status})
+
+@job('default')
+def longrun(task):
+  job = get_current_job()
+  task.result = 'FASE 1 av 6 - Sjekker'
+
+  #duration_in_second_persentages = task.duration*1.0 / 100
+  duration_in_second_persentages = 10*1.0 / 100
+  for i in range(100):
+      task.progress = i
+      task.save()
+      print(task.progress)
+      time.sleep(duration_in_second_persentages)
+
+  task.result = 'FERDIG'
+  task.save()
+  return task.result

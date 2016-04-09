@@ -9,13 +9,36 @@
 		<input class="w3-btn w3-hover-purple" type="submit" value="Søk" />
 	</form>
 	{% if search.results > 0 %}
-	<p> Du søkte etter {{search.query}} og fikk {{search.results}} treff. Trykk på filen du leter etter!</p>
+	<p> Du søkte etter <span class="w3-tag w3-theme">{{search.query}}</span> og fikk {{search.results}} treff. Trykk på filen du leter etter!</p>
 	{% elif search.query and search.results == 0 %}
-	<p> Søket etter {{search.query}} gav ingen treff, prøv å søke etter noe annet!</p>
+	<p> Søket etter <span class="w3-tag w3-theme">{{search.query}}</span> gav ingen treff, prøv å søke etter noe annet!</p>
 	{% else %} 
 	<P>Du har ikke gjort noe søk enda, men her er de de nyeste filene som er endret i Dalet, kanskje du er på utkikk etter en av disse? Bare trykk på filen så blir det MP3 og FTP!</p>
 	{% endif %}
 	{% for file in filelist %}
-	<a class="w3-btn w3-hover-purple" href="#">{{file}}</a>
+	<a class="w3-btn w3-hover-purple" href="{% url 'wavsearch' %}addqueue/{{file}}/">{{file}}</a>
 	{% endfor %}
+	{% if addqueue %}
+	<div id="modal01" class="w3-modal" style="display:block">	
+	  <div class="w3-modal-content">
+	    <div class="w3-container">
+	      <span onclick="document.getElementById('modal01').style.display='none'" class="w3-closebtn">&times;</span>
+	       <p>Vil du legge til filen <span class="w3-tag w3-theme">{{addqueue}}</span> i kø for mp3 komprimering og sending til FTP?</p>
+	      <a class="w3-btn w3-hover-purple" href="{% url 'wavsearch' %}enqueue/{{addqueue}}">Ja takk</a>
+	      <span class="w3-btn w3-hover-purple" onclick="document.getElementById('modal01').style.display='none'">Nei takk</span>
+	    </div>
+	  </div>	
+	</div>
+	{% endif %}
+	{% if enqueue %}
+	<div id="modal02" class="w3-modal" style="display:block">	
+	  <div class="w3-modal-content">
+	    <div class="w3-container">
+	      <span onclick="document.getElementById('modal02').style.display='none'" class="w3-closebtn">&times;</span>
+	       <p>Filen <span class="w3-tag w3-theme">{{enqueue}}</span> er lagt til i kø. Du kan se status under fanen jobbstatus.</p>
+	      <span class="w3-btn w3-hover-purple" onclick="document.getElementById('modal02').style.display='none'">Ok</span>
+	    </div>
+	  </div>	
+	</div>
+	{% endif %}
 {% endblock %}

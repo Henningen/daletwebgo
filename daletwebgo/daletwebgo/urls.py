@@ -17,6 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^admin/rq/', include('django_rq_dashboard.urls')),
+    url(r'^admin/django_rq/', include('django_rq.urls')),
     url(r'', include('wavfinder.urls')),
     url(r'^wavfinder/', include('wavfinder.urls')),
     url(r'^admin/', admin.site.urls),
