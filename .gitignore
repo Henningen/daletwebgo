@@ -51,3 +51,15 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+#VIM IGNORES:
+#swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
